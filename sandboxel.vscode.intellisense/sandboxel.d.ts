@@ -285,62 +285,64 @@ type propertyName = string;
 type defaultValue = any;
 type state = 'solid'|'liquid'|'gas'|(string&{});
 type category = (typeof categoryList)[number]|(string&{});
-type Reactions = Record<elementNameString,{
-    elem1: elementNameString|null,
-    elem2: elementNameString|null,
-    chance?: zeroToOne,
-    tempMin?: number,
-    tempMax?: number,
-    /**
-     * Reaction only occurs if elem1 moves into elem2
-     */
-    oneway?: boolean,
-    /**
-     * Reaction only occurs if elements are charged
-     */
-    charged?: boolean,
-    /**
-     * Reaction only occurs if elem1 is burning
-     */
-    burning1?: boolean,
-    /**
-     * Reaction only occurs if elem2 is burning
-     */
-    burning2?: boolean,
-    /**
-     * Reaction only occurs at y-values within range
-     */
-    y?: number,
-    /**
-     * Reaction only occurs if specified setting is enabled
-     */
-    setting?: setting,
-    /**
-     * Color(s) of primary reactant
-     */
-    color1?: colorString|colorString[],
-    /**
-     * Color(s) of secondary reactant
-     */
-    color2?: colorString|colorString[],
-    /**
-     * Temperature of primary reactant
-     */
-    temp1?: temperatureNumber,
-    /**
-     * Temperature of secondary reactant
-     */
-    temp2?: temperatureNumber,
-    /**
-     * Additional attribute of primary reactant, must be applicable
-     */
-    attr1?: Record<string, any>,
-    /**
-     * Additional attribute of secondary reactant, must be applicable
-     */
-    attr2?: Record<string, any>,
-    func?: (pixel1:Pixel,pixel2:Pixel)=>void,
-}>;
+type Reactions = {
+    [key in elementNameString]?: { // Сделали знак '?', чтобы не обязательно было описывать вообще все элементы
+        elem1: elementNameString | null,
+        elem2: elementNameString | null,
+        chance?: zeroToOne,
+        tempMin?: number,
+        tempMax?: number,
+        /**
+         * Reaction only occurs if elem1 moves into elem2
+         */
+        oneway?: boolean,
+        /**
+         * Reaction only occurs if elements are charged
+         */
+        charged?: boolean,
+        /**
+         * Reaction only occurs if elem1 is burning
+         */
+        burning1?: boolean,
+        /**
+         * Reaction only occurs if elem2 is burning
+         */
+        burning2?: boolean,
+        /**
+         * Reaction only occurs at y-values within range
+         */
+        y?: number,
+        /**
+         * Reaction only occurs if specified setting is enabled
+         */
+        setting?: setting,
+        /**
+         * Color(s) of primary reactant
+         */
+        color1?: colorString | colorString[],
+        /**
+         * Color(s) of secondary reactant
+         */
+        color2?: colorString | colorString[],
+        /**
+         * Temperature of primary reactant
+         */
+        temp1?: temperatureNumber,
+        /**
+         * Temperature of secondary reactant
+         */
+        temp2?: temperatureNumber,
+        /**
+         * Additional attribute of primary reactant, must be applicable
+         */
+        attr1?: Record<string, any>,
+        /**
+         * Additional attribute of secondary reactant, must be applicable
+         */
+        attr2?: Record<string, any>,
+        func?: (pixel1: Pixel, pixel2: Pixel) => void,
+    }
+};
 type colorString = string;
 type colorObject = {r:number,g:number,b:number};
 type colorPattern = string[];
