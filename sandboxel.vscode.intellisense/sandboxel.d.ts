@@ -30,7 +30,7 @@ declare var onAddElementList: ((key:string,obj:element)=>void)[];
 declare var currentElementProp: Record<string,any>|null;
 declare function addElement(key:string,obj:element): void;
 declare function onAddElement(callback:(key:string,obj:element)=>void);
-declare function selectElement(elem:elementNameString,properties?:Record<string,any>);
+declare function selectElement(elem:elementNameString|null,properties?:Record<string,any>);
 declare function selectPrevElement(): void;
 declare function mostSimilarElement(s:elementNameString): elementNameString|'';
 
