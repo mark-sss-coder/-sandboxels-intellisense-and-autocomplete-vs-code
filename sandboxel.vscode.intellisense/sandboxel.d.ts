@@ -390,7 +390,9 @@ type Pixel = {
 };
 type temperatureNumber = number;
 type temperatureString = string;
-type elementNameString = keyof typeof elements;
+type elementNameString = {
+    [K in keyof typeof elements]: string extends K ? never : K
+}[keyof typeof elements];
 type behaviorPattern = [string, string, string];
 
 type extraTemperature = Record<temperatureString,elementNameString|null>;
