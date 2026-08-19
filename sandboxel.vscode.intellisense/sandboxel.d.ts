@@ -283,7 +283,6 @@ type element = {
 };
 type propertyName = string;
 type defaultValue = any;
-type elementNameString = keyof typeof elements;
 type state = 'solid'|'liquid'|'gas'|(string&{});
 type category = (typeof categoryList)[number]|(string&{});
 type Reactions = Record<elementNameString,{
@@ -389,7 +388,7 @@ type Pixel = {
 };
 type temperatureNumber = number;
 type temperatureString = string;
-
+type elementNameString = keyof typeof elements;
 type behaviorPattern = [string, string, string];
 
 type extraTemperature = Record<temperatureString,elementNameString|null>;
