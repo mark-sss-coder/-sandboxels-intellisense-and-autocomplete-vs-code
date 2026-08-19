@@ -421,7 +421,7 @@ declare function hexToRgb(hex:colorString):colorObject;
 declare function rgbToHex(r:number,g:number,b:number):colorString;
 declare function pixelColorPick(pixel:Pixel,color?:colorString):colorString;
 /**
- * Runs the callback every tick without pauses and runs it fast even with small FPS
+ * Runs the callback every tick fast even with small FPS
  */
 declare function runEveryTick(callback:()=>void):void;
 declare function runPerPixel(callback:(pixel:Pixel)=>void): void;
