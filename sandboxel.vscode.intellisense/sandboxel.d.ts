@@ -127,7 +127,89 @@ type element = {
     alpha?: zeroToOne,
     glow?: boolean,
     firedColors?: Record<elementNameString,colorString[]>,
+    /**
+     * ## Main
+     * Number after the name of the command (e.g. `M1`,`M2`,`C2`) is a priority
+     * ## Motion
+     * - `M1` - Move the central pixel to the position of `M1`  
+     * - `M2` - like `M1`, but if M1 isn't possible (`M1` is blocked)  
+     * - `M3` - like `M2`
+     * ## Change Self
+     * - `C1:type` - moves the central pixel to its (`C1`) position and changes the type of central to `type` argument  
+     * - `C2:type` - `C1` with priority
+     * ## Leave Behind
+     * - `L1:type` - moves the central pixel to its (`L1`) position and leaves the block from where central cell is moved with `type` pixel  
+     * - `L2:type` - `L1` with priority
+     * ## Support
+     * - `SP` - if there is a solid block, central pixel will save its position and don't move
+     * ## Ignore
+     * - `XX` - ignore the cell
+     * ## Heat & Fire
+     * - `CR` - distributing fire to the neighbor of cell where `CR` is placed if it's burning  
+     * - `HT` - heat. Makes heat, increases the temperature of any neighbor on every tick  
+     * - `CL` - like `HT`, but cools.  
+     * - `FI` - Fire push. Pushes the active burning state to neighbors
+     * ## Destruction & Reactions
+     * - `DL` - delete. Dissolves/deletes the neighbor  
+     * - `DB` - annihilation (Delete Both). Deletes the cell where it stands and the central cell  
+     * - `CH:type` - change the neighbor. Changes the pixel where it stands to type  
+     * - `ST` - stain. Spreads color attributes to stainable neighbor pixels
+     * ## Life & Biology
+     * - `GR` - grow. Triggers plant-like growth and spreading into this cell  
+     * - `RE` - reproduce. Forces cell division, cloning, or infection (e.g., viruses, cancer)
+     * ## Electricity & Electronics
+     * - `CO` - conduct. Passes down the electrical charge to valid conductors nearby  
+     * - `SH` - shock. Spawns electrical sparks or lightning pixels into adjacent slots
+     * ## Explosions
+     * - `EX:power>fireType` - explosion trigger. Creates an explosion with a specific power and fire output
+     * ## Modifiers
+     * - `COMMAND:element` - locks the command to a specific target (e.g., `DL:iron` deletes only iron)
+     * - `COMMAND%chance` - adds a percentage chance for the rule to execute (e.g., `M1%50`)
+     * ## Example
+     * @example ['HT|M1|HT', 'M1|XX|M1', 'HT|M2|HT'] // makes the gas that can make the neighbors by the diagonal more hotter
+     */
     behavior?: behaviorPattern|((pixel:Pixel)=>void),
+    /**
+     * ## Main
+     * Number after the name of the command (e.g. `M1`,`M2`,`C2`) is a priority
+     * ## Motion
+     * - `M1` - Move the central pixel to the position of `M1`  
+     * - `M2` - like `M1`, but if M1 isn't possible (`M1` is blocked)  
+     * - `M3` - like `M2`
+     * ## Change Self
+     * - `C1:type` - moves the central pixel to its (`C1`) position and changes the type of central to `type` argument  
+     * - `C2:type` - `C1` with priority
+     * ## Leave Behind
+     * - `L1:type` - moves the central pixel to its (`L1`) position and leaves the block from where central cell is moved with `type` pixel  
+     * - `L2:type` - `L1` with priority
+     * ## Support
+     * - `SP` - if there is a solid block, central pixel will save its position and don't move
+     * ## Ignore
+     * - `XX` - ignore the cell
+     * ## Heat & Fire
+     * - `CR` - distributing fire to the neighbor of cell where `CR` is placed if it's burning  
+     * - `HT` - heat. Makes heat, increases the temperature of any neighbor on every tick  
+     * - `CL` - like `HT`, but cools.  
+     * - `FI` - Fire push. Pushes the active burning state to neighbors
+     * ## Destruction & Reactions
+     * - `DL` - delete. Dissolves/deletes the neighbor  
+     * - `DB` - annihilation (Delete Both). Deletes the cell where it stands and the central cell  
+     * - `CH:type` - change the neighbor. Changes the pixel where it stands to type  
+     * - `ST` - stain. Spreads color attributes to stainable neighbor pixels
+     * ## Life & Biology
+     * - `GR` - grow. Triggers plant-like growth and spreading into this cell  
+     * - `RE` - reproduce. Forces cell division, cloning, or infection (e.g., viruses, cancer)
+     * ## Electricity & Electronics
+     * - `CO` - conduct. Passes down the electrical charge to valid conductors nearby  
+     * - `SH` - shock. Spawns electrical sparks or lightning pixels into adjacent slots
+     * ## Explosions
+     * - `EX:power>fireType` - explosion trigger. Creates an explosion with a specific power and fire output
+     * ## Modifiers
+     * - `COMMAND:element` - locks the command to a specific target (e.g., `DL:iron` deletes only iron)
+     * - `COMMAND%chance` - adds a percentage chance for the rule to execute (e.g., `M1%50`)
+     * ## Example
+     * @example ['HT|M1|HT', 'M1|XX|M1', 'HT|M2|HT'] // makes the gas that can make the neighbors by the diagonal more hotter
+     */
     behaviorOn?: behaviorPattern|((pixel:Pixel)=>void),
     tick?: (pixel:Pixel)=>void,
     tick1?: (pixel:Pixel)=>void,
@@ -421,7 +503,7 @@ declare function hexToRgb(hex:colorString):colorObject;
 declare function rgbToHex(r:number,g:number,b:number):colorString;
 declare function pixelColorPick(pixel:Pixel,color?:colorString):colorString;
 /**
- * Runs the callback every tick fast even with small FPS
+ * Runs the callback every tick without pauses and runs it fast even with small FPS
  */
 declare function runEveryTick(callback:()=>void):void;
 declare function runPerPixel(callback:(pixel:Pixel)=>void): void;
