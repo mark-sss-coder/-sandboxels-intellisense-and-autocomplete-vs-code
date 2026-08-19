@@ -18,3 +18,5 @@ If you want to keep `sandboxel.d.ts` in a separate folder, specify the relative 
 ```javascript
 /// <reference path="../types/sandboxel.d.ts" />
 ```
+
+> **ProTip!** Enter `//@ts-check` at the first line of file to let the VS Code turn on the semantic testing. This helps you with errors in arguments, and validated other value types.
