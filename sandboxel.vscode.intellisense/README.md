@@ -20,3 +20,35 @@ If you want to keep `sandboxel.d.ts` in a separate folder, specify the relative 
 ```
 
 > **ProTip!** Enter `//@ts-check` at the first line of file to let the VS Code turn on the semantic testing. This helps you with errors in arguments, and validated other value types.
+
+> **Warning** VS Code can't remember that you changed the JSON key. Sorry, but the suggestions will not work. e.g.
+```js
+/// <reference path="./sandboxel.d.ts" />
+(()=>{
+    /**
+     * Neighbors: [x,y,liveWeight?,deadWeight?]
+     */
+    var lifeRules = {live:{live:[2,3]},dead:{live:[3]},neighbors:[[1,1],[1,-1],[-1,1],[-1,-1],[1,0],[-1,0],[0,1],[0,-1]]};
+    elements.alive = {
+        color:'#eeeeee',
+        name:'Alive cell'
+    }
+    elements.dead = {
+        color:'#888888',
+        name:'Dead cell'
+    }
+    runEveryTick(()=>{
+        const old = [...pixelMap];
+        for(let i = 0; i < old.length; i++)
+        for(let j = 0; j < old[i].length; j++) {
+            let nCount = 0;
+            for(let n of lifeRules.neighbors) {
+                nCount += (outOfBounds(i+n[0],j+n[1])||(old[i+n[0]][j+n[1]]?.element=='alive')?(n[3]??0):(n[2]??1));
+            }
+            //@ts-ignore
+            if(old[i][j]?.element==='alive' && !lifeRules.live.live.includes(nCount)) changePixel(old[i][j],"")
+        };
+    }
+);})();
+```
+> It will be not suggested. VS Code will tell you about 'alive' is not in elements. Don't worry, continue writing!
