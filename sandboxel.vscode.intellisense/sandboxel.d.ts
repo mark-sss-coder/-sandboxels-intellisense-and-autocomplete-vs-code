@@ -402,7 +402,7 @@ declare var width: number;
 declare var height: number;
 declare var pixelTicks: number;
 declare function isEmpty(x:number,y:number,ignoreAir?:boolean):boolean;
-declare function outOfBounds(x:number,y:number): void;
+declare function outOfBounds(x:number,y:number): boolean;
 declare function changePixel(pixel:Pixel,newElem:elementNameString):void;
 /**
  * Tries to move the pixel to x and y. If it's possible, moves the pixel
